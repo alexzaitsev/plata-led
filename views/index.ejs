@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Plata LED</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<script language="JavaScript">
+		function setRGB(red, green, blue) {
+			var url = 'http://dittohead.duckdns.org:1212/setled?key=1243';
+			if (red.length > 0) {
+				url += '&r=' + red;
+			}
+			if (green.length > 0) {
+				url += '&g=' + green;
+			}
+			if (blue.length > 0) {
+				url += '&b=' + blue;
+			}
+	        console.log(url);
+	        $.get(url, function( data ) {
+				console.log('success');
+				console.log(data);
+			});
+		}
+
+		function clearRGB(form) {
+			form.red.value = "";
+      		form.green.value = "";
+			form.blue.value = "";
+		}
+
+		function getBrightness() {
+			var url = 'http://dittohead.duckdns.org:1212/brightness';
+			console.log(url);
+	        $.get(url, function( data ) {
+				$("#brightness-value").text(data);
+			});
+		}
+	</script>
+	
+	<div class="container">
+		<br>
+		<p><b>Set RGB [0;1023]</b></p>
+		<form role="form">
+			<div class="row">
+	    		<input class="col-xs-1" name="red" type="text" size="8" placeholder="red">
+	    		<input class="col-xs-1" name="green" type="text" size="8" placeholder="green">
+	    		<input class="col-xs-1" name="blue" type="text" size="8" placeholder="blue">
+	    	</div>
+	    	<br>
+	    	<div class="row">
+	 			<input type="button" onClick="setRGB(this.form.red.value, this.form.green.value, this.form.blue.value)" value="Set" class="btn btn-default btn-lg col-xs-1">
+	 			<input type="button" onClick="clearRGB(this.form)" value="Reset" class="btn btn-default btn-lg col-xs-2">
+	 		</div>
+	 	</form>
+
+	 	<br><br>
+	 	<p><b>Get brightness</b></p>
+	 	<div class="row">
+	 		<input type="button" onClick="getBrightness()" value="Get" class="btn btn-default btn-lg col-xs-1">
+	 		<p id="brightness-value" class="col-xs-2"/>
+	 	</div>
+	</div>
+ 	
+ 	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
